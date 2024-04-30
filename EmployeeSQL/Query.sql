@@ -58,12 +58,21 @@ where d.dept_name = 'Sales';
 -- including their employee number, last name, first name, 
 -- and department name.
 
-select de.emp_no, e.last_name, e.first_name, d.dept_name
-from dept_emp as de
-inner join employees as e on
-de.emp_no = e.emp_no
-inner join departments as d on
-d.dept_no = de.dept_no	
+SELECT de.emp_no, e.last_name, e.first_name, d.dept_name
+FROM
+	(SELECT emp_no, dept_no
+    FROM dept_emp) 
+	AS de
+INNER JOIN
+	(SELECT emp_no, last_name, first_name
+    FROM employees) 
+	AS e
+ON de.emp_no = e.emp_no
+INNER JOIN
+	(SELECT dept_no, dept_name
+    FROM departments) 
+	AS d
+ON d.dept_no = de.dept_no
 where d.dept_name = 'Sales' or d.dept_name = 'Development';
 
 -- List the frequency counts, in descending order, of all the 
